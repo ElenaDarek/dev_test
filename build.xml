@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+
+<project name="bitext2tmx" default="run" basedir=".">
+  <description>Builds, tests, and runs bitext2tmx</description>
+  <property name="version" value="-1.0M0.1" />
+  <property name="build" value="-140117" />
+  <property name="bitext2tmx.compiler.debug" value="false" />
+
+  <target name="init" description="Set up directory structure and  environment">
+    <mkdir dir="build"/>
+    <!-- <mkdir dir="dist"/> -->
+  </target>
+
+  <target name="compile" depends="init" description="Compile classes">
+    <javac source="1.5" target="1.5" srcdir="src" nowarn="true"
+           deprecation="false" debug="{bitext2tmx.compiler.debug}"
+           destdir="build">
+      <classpath>
+        <fileset dir="lib" includes="**/*.jar"/>
+      </classpath>
+    </javac>
+
+    <!-- Straight copy of image, will fix better -->
+    <!--<copy file="src/net/sf/bitext2tmx/ui/dialogs/about.png" tofile="build/net/sf/bitext2tmx/ui/dialogs/about.png"/>-->
+    <copy todir="build">
+      <fileset dir="src" excludes="**/*.java"/>
+    </copy>
+  </target>
+
+  <target name="jar" depends="compile" description="Build jar">
+    <!-- Use this if you to leave old jar alone, create 'dist' first! -->
+    <!-- <jar jarfile="dist/bitext2tmx.jar" manifest="MANIFEST.MF"> -->
+
+    <!--
+          Overwrites existing jar, okay for development
+          You have been warned!
+    -->
+    <jar jarfile="bitext2tmx${version}${build}.jar" manifest="MANIFEST.MF">
+      <fileset dir="build">
+        <!--<include name="**/*.class" />
+        <include name="**/about.png" />-->
+      </fileset>
+    </jar>
+  </target>
+
+  <target name="run" depends="jar,compile" description="Run this mother">
+    <java jar="./bitext2tmx${version}${build}.jar"
+          fork="true"
+          spawn="true"
+          maxmemory="256">
+      <arg value="-noserver" />
+    </java>
+  </target>
+
+  <target name="clean" depends="init" description="Clean up after build process">
+    <delete dir="build" verbose="false"/>
+    <delete file="bitext2tmx${version}${build}.jar" verbose="true"/>
+    <!-- <delete dir="dist" verbose="false"/> -->
+  </target>
+
+</project>
