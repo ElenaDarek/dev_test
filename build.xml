@@ -3,7 +3,7 @@
 
 
 <project name="bitext2tmx" default="run" basedir=".">
-  <description>Builds, tests, and runs bitext2tmx</description>
+  <description>Builds, tests, and runs bitext2tmx_translate</description>
   <property name="version" value="-1.0M0.1" />
   <property name="build" value="-140117" />
   <property name="bitext2tmx.compiler.debug" value="false" />
